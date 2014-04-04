@@ -2,6 +2,8 @@ package terminal
 
 import (
 	"fmt"
+	"github.com/robertkrimen/isatty"
+
 	"os"
 	"regexp"
 	"runtime"
@@ -21,7 +23,7 @@ const (
 )
 
 func Colorize(message string, color Color, bold bool) string {
-	if runtime.GOOS == "windows" || os.Getenv("CF_COLOR") != "true" {
+	if !OsSupportsColours() || os.Getenv("CF_COLOR") == "false" || (!TerminalSupportsColours() && os.Getenv("CF_COLOR") != "true") {
 		return message
 	}
 
@@ -99,4 +101,12 @@ func LogAppHeaderColor(message string) string {
 
 func LogSysHeaderColor(message string) string {
 	return Colorize(message, cyan, true)
+}
+
+var OsSupportsColours = func() bool {
+	return runtime.GOOS != "windows"
+}
+
+var TerminalSupportsColours = func() bool {
+	return isatty.Check(os.Stdout.Fd())
 }

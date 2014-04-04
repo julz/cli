@@ -11,10 +11,11 @@ import (
 	"cf/requirements"
 	"cf/terminal"
 	"fmt"
-	"github.com/codegangsta/cli"
 	"os"
 	"runtime/debug"
 	"strings"
+
+	"github.com/codegangsta/cli"
 )
 
 type cliDependencies struct {
@@ -25,10 +26,6 @@ type cliDependencies struct {
 }
 
 func setupDependencies() (deps *cliDependencies) {
-	if os.Getenv("CF_COLOR") == "" {
-		os.Setenv("CF_COLOR", "true")
-	}
-
 	deps = new(cliDependencies)
 
 	deps.termUI = terminal.NewUI(os.Stdin)

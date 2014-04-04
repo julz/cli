@@ -5,11 +5,12 @@ import (
 	"cf/configuration"
 	"cf/trace"
 	"fmt"
-	"github.com/codegangsta/cli"
 	"io"
 	"os"
 	"strings"
 	"time"
+
+	"github.com/codegangsta/cli"
 )
 
 type ColoringFunction func(value string, row int, col int) string
